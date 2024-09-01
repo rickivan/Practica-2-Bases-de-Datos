@@ -21,10 +21,10 @@ class Entrenador(Entidad):
         """
         self.archivo = "archivos/entrenador.csv"
         if not os.path.exists(self.archivo):
-            self.inicializar_archivo()
+            self.__inicializar_archivo()
 
 
-    def inicializar_archivo(self):
+    def __inicializar_archivo(self):
         """Inicializa el archivo CSV con los encabezados correspondientes a un entrenador.
 
         Si el archivo CSV no existe, lo crea con los encabezados necesarios.
@@ -36,7 +36,7 @@ class Entrenador(Entidad):
                              'Disciplina', 'Teléfono', 'Correo'])
 
 
-    def exist(self, id):
+    def __exist(self, id):
         """Verifica si un entrenador con un ID específico existe en el archivo.
 
         Args:
@@ -72,7 +72,7 @@ class Entrenador(Entidad):
         """
         try:
             id = int(datos[0])
-            if self.exist(id):
+            if self.__exist(id):
                 print(f"El entrenador con ID {id} ya está registrado.")
                 return
         except ValueError as e:
@@ -121,7 +121,7 @@ class Entrenador(Entidad):
         Raises:
             Exception: Si ocurre un error al leer o escribir en el archivo.
         """
-        if not self.exist(id):
+        if not self.__exist(id):
             print(f"El entrenador con ID {id} no está registrado.")
             return
 
@@ -161,7 +161,7 @@ class Entrenador(Entidad):
         Raises:
             Exception: Si ocurre un error al leer o escribir en el archivo.
         """
-        if not self.exist(id):
+        if not self.__exist(id):
             print(f"El entrenador con ID {id} no está registrado.")
             return
 
