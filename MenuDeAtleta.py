@@ -9,7 +9,7 @@ def mostrar_menu():
     print("4. Eliminar atleta")
     print("5. Salir")
 
-def solicitar_datos_entrenador():
+def solicitar_datos_atleta():
     """Solicita al usuario los datos de un atleta.
 
     Returns:
@@ -41,10 +41,14 @@ def main():
     while True:
         mostrar_menu()
         opcion = input("Selecciona una opción: ")
-
+        
         if opcion == '1':
             datos = solicitar_datos_atleta()
-            atleta.agregar_datos(datos)
+            try:
+                atleta.validar_entrada(datos) 
+                atleta.agregar_datos(datos)
+            except ValueError as e:
+                print(f"Error en los datos ingresados: {e}")
         elif opcion == '2':
             id = input("Ingresa el ID del atleta a consultar: ")
             atleta.consultar_datos(id)
