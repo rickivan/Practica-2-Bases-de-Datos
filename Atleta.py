@@ -3,48 +3,48 @@ import os
 from Entidad import Entidad
 from datetime import datetime
 
-class Entrenador(Entidad):
-    """Clase para gestionar la información de entrenadores.
+class Atleta(Entidad):
+    """Clase para gestionar la información de Atletaes.
 
     Esta clase maneja la creación, consulta, edición y eliminación de 
-    información de entrenadores almacenada en un archivo CSV.
+    información de Atletaes almacenada en un archivo CSV.
 
     Attributes:
-        archivo (str): Ruta al archivo CSV donde se almacenan los datos de los entrenadores.
+        archivo (str): Ruta al archivo CSV donde se almacenan los datos de los Atletaes.
     """
 
     archivo = ""
 
     def __init__(self):
-        """Inicializa la clase Entrenador.
+        """Inicializa la clase Atleta.
 
         Establece la ruta del archivo CSV y crea el archivo si no existe.
         """
-        self.archivo = "archivos/entrenador.csv"
+        self.archivo = "archivos/Atleta.csv"
         if not os.path.exists(self.archivo):
             self.__inicializar_archivo()
 
 
     def __inicializar_archivo(self):
-        """Inicializa el archivo CSV con los encabezados correspondientes a un entrenador.
+        """Inicializa el archivo CSV con los encabezados correspondientes a un Atleta.
 
         Si el archivo CSV no existe, lo crea con los encabezados necesarios.
         """
         with open(self.archivo, mode='w', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(['ID', 'Nombre', 'Apellido Paterno', 'Apellido Materno', 
-                             'Nacionalidad', 'Fecha de nacimiento', 'Atleta', 
-                             'Disciplina', 'Teléfono', 'Correo'])
+                             'Nacionalidad', 'Fecha de nacimiento', 
+                             'Disciplina','Género', 'Teléfono', 'Correo'])
 
 
     def __exist(self, id):
-        """Verifica si un entrenador con un ID específico existe en el archivo.
+        """Verifica si un Atleta con un ID específico existe en el archivo.
 
         Args:
-            id (int): ID del entrenador a verificar.
+            id (int): ID del Atleta a verificar.
 
         Returns:
-            bool: True si el entrenador existe, False en caso contrario.
+            bool: True si el Atleta existe, False en caso contrario.
         """
         try:
             with open(self.archivo, mode='r') as file:
@@ -66,7 +66,7 @@ class Entrenador(Entidad):
         ValueError: Si alguno de los datos no cumple con el tipo esperado o el formato.
         """
         if len(datos) != 10:
-            raise ValueError("La lista de datos debe contener exactamente 10 elementos.")
+            raise ValueError("La lista de datos debe contener exactamente 9 elementos.")
 
         try:
             datos[0] = int(datos[0])  # Validar que el ID sea un entero
@@ -74,7 +74,7 @@ class Entrenador(Entidad):
             raise ValueError("El ID debe ser un número entero.")
     
         if not all(isinstance(datos[i], str) for i in range(1, 9)):
-            raise ValueError("Nombre, Apellidos, Nacionalidad, Atleta, Disciplina deben ser cadenas de texto.")
+            raise ValueError("Nombre, Apellidos, Nacionalidad, Disciplina, Género deben ser cadenas de texto.")
     
         try:
             datos[8] = int(datos[8])  # Validar que el Teléfono sea un entero
@@ -83,7 +83,7 @@ class Entrenador(Entidad):
     
         if not self.validar_formato_fecha(datos[5]):
             raise ValueError("La Fecha de Nacimiento debe estar en el formato YYYY-MM-DD.")
-
+    
     def validar_formato_fecha(self, fecha):
         """Valida el formato de la fecha en el formato YYYY-MM-DD usando datetime."""
         try:
@@ -92,16 +92,17 @@ class Entrenador(Entidad):
         except ValueError:
             return False
 
-    def agregar_datos(self, datos):
-        """Agrega un nuevo entrenador al archivo CSV.
 
-        Verifica si el ID ya existe antes de agregar el nuevo entrenador.
+    def agregar_datos(self, datos):
+        """Agrega un nuevo Atleta al archivo CSV.
+
+        Verifica si el ID ya existe antes de agregar el nuevo Atleta.
 
         Args:
-            datos (list): Lista con los datos del entrenador en el orden 
+            datos (list): Lista con los datos del Atleta en el orden 
             ['ID', 'Nombre', 'Apellido Paterno', 'Apellido Materno', 
-             'Nacionalidad', 'Fecha de nacimiento', 'Atleta', 
-             'Disciplina', 'Teléfono', 'Correo'].
+             'Nacionalidad', 'Fecha de nacimiento', 'Género', 
+             'Teléfono', 'Correo'].
 
         Raises:
             ValueError: Si el ID no es un número entero válido.
@@ -109,7 +110,7 @@ class Entrenador(Entidad):
         try:
             id = int(datos[0])
             if self.__exist(id):
-                print(f"El entrenador con ID {id} ya está registrado.")
+                print(f"El Atleta con ID {id} ya está registrado.")
                 return
         except ValueError as e:
             print(f"Error al procesar los datos: {e}")
@@ -120,16 +121,16 @@ class Entrenador(Entidad):
                 writer = csv.writer(file)
                 writer.writerow(datos)
 
-            print(f"Entrenador registrado exitosamente.")
+            print(f"Atleta registrado exitosamente.")
         except Exception as e:
-            print(f"Error al registrar al entrenador: {e}")
+            print(f"Error al registrar al Atleta: {e}")
 
 
     def consultar_datos(self, id):
-        """Consulta la información de un entrenador por ID.
+        """Consulta la información de un Atleta por ID.
 
         Args:
-            id (int): ID del entrenador a consultar.
+            id (int): ID del Atleta a consultar.
 
         Raises:
             Exception: Si ocurre un error al leer el archivo.
@@ -141,16 +142,16 @@ class Entrenador(Entidad):
                     if row['ID'] == id:
                         print(row)
                         return
-                print(f"No fue posible encontrar un entrenador con ID: {id}.")
+                print(f"No fue posible encontrar un Atleta con ID: {id}.")
         except Exception as e:
-            print(f"Error al consultar al entrenador con ID: {id}")
+            print(f"Error al consultar al Atleta con ID: {id}")
 
 
     def editar_datos(self, id, campo, valor):
-        """Edita la información de un entrenador en el archivo CSV.
+        """Edita la información de un Atleta en el archivo CSV.
 
         Args:
-            id (int): ID del entrenador a editar.
+            id (int): ID del Atleta a editar.
             campo (str): Campo que se desea editar.
             valor (str): Nuevo valor para el campo.
 
@@ -158,11 +159,11 @@ class Entrenador(Entidad):
             Exception: Si ocurre un error al leer o escribir en el archivo.
         """
         if not self.__exist(id):
-            print(f"El entrenador con ID {id} no está registrado.")
+            print(f"El Atleta con ID {id} no está registrado.")
             return
 
         if campo == 'ID':
-            print(f"No es posible modificar el ID del entrenador.")
+            print(f"No es posible modificar el ID del Atleta.")
             return
 
         temp_archivo = 'archivos/temp.csv'
@@ -182,23 +183,23 @@ class Entrenador(Entidad):
             os.remove(self.archivo)
             os.rename(temp_archivo, self.archivo)
 
-            print(f"{campo} del entrenador editado exitosamente.")
+            print(f"{campo} del Atleta editado exitosamente.")
         except Exception as e:
-            print(f"Error al editar el entrenador con ID {id}: {e}")
+            print(f"Error al editar el Atleta con ID {id}: {e}")
             if os.path.exists(temp_archivo):
                 os.remove(temp_archivo)
 
     def eliminar_datos(self, id):
-        """Elimina un entrenador del archivo CSV por su ID.
+        """Elimina un Atleta del archivo CSV por su ID.
 
         Args:
-            id (int): ID del entrenador a eliminar.
+            id (int): ID del Atleta a eliminar.
 
         Raises:
             Exception: Si ocurre un error al leer o escribir en el archivo.
         """
         if not self.__exist(id):
-            print(f"El entrenador con ID {id} no está registrado.")
+            print(f"El Atleta con ID {id} no está registrado.")
             return
 
         temp_archivo = 'archivos/temp.csv'
@@ -217,8 +218,8 @@ class Entrenador(Entidad):
             os.remove(self.archivo)
             os.rename(temp_archivo, self.archivo)
 
-            print(f"Entrenador con ID {id} eliminado exitosamente.")
+            print(f"Atleta con ID {id} eliminado exitosamente.")
         except Exception as e:
-            print(f"Error al eliminar el entrenador con ID {id}: {e}")
+            print(f"Error al eliminar el Atleta con ID {id}: {e}")
             if os.path.exists(temp_archivo):
                 os.remove(temp_archivo)

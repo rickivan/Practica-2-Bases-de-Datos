@@ -1,5 +1,6 @@
 from Entrenador import Entrenador
 
+
 def mostrar_menu_entrenador():
     """Muestra el menú de opciones para la gestión de entrenadores."""
     print("\n--- Menú de Entrenadores ---")
@@ -29,6 +30,8 @@ def solicitar_datos_entrenador():
     correo = input("Correo: ")
     return [id, nombre, apellido_paterno, apellido_materno, nacionalidad, fecha_nacimiento, atleta, disciplina, telefono, correo]
 
+
+
 def main():
     """Función principal que maneja la interacción con el usuario.
 
@@ -44,7 +47,13 @@ def main():
 
         if opcion == '1':
             datos = solicitar_datos_entrenador()
-            entrenador.agregar_datos(datos)
+            try:
+
+                entrenador.validar_entrada(datos) 
+                entrenador.agregar_datos(datos)
+            except ValueError as e:
+                print(f"Error en los datos ingresados: {e}")
+                
         elif opcion == '2':
             id = input("Ingresa el ID del entrenador a consultar: ")
             entrenador.consultar_datos(id)
