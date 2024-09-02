@@ -1,6 +1,6 @@
 from Entrenador import Entrenador
 
-def mostrar_menu():
+def mostrar_menu_entrenador():
     """Muestra el menú de opciones para la gestión de entrenadores."""
     print("\n--- Menú de Entrenadores ---")
     print("1. Agregar entrenador")
@@ -39,7 +39,7 @@ def main():
     entrenador = Entrenador()
 
     while True:
-        mostrar_menu()
+        mostrar_menu_entrenador()
         opcion = input("Selecciona una opción: ")
 
         if opcion == '1':
@@ -61,6 +61,3 @@ def main():
             break
         else:
             print("Opción no válida. Por favor, elige una opción del menú.")
-
-if __name__ == "__main__":
-    main()
