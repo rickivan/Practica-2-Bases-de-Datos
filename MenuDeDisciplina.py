@@ -39,16 +39,19 @@ def main():
             datos = solicitar_datos_disciplina()
             disciplina.agregar_datos(datos)
         elif opcion == '2':
-            id = input("Ingresa el nombre de la disciplina a consultar: ")
-            disciplina.consultar_datos(id)
+            nombre = input("Ingresa el nombre de la disciplina a consultar: ")
+            categoria = input("Ingresa la categoria de la disciplina a consultar: ")
+            disciplina.consultar_datos(nombre, categoria)
         elif opcion == '3':
-            id = input("Ingresa el nombre de la disciplina a editar: ")
+            nombre = input("Ingresa el nombre de la disciplina a editar: ")
+            categoria = input("Ingresa la categoria de la disciplina a editar: ")
             campo = input("Ingresa el nombre del campo a editar: ")
             valor = input("Ingresa el nuevo valor: ")
-            disciplina.editar_datos(id, campo, valor)
+            disciplina.editar_datos(nombre, categoria, campo, valor)
         elif opcion == '4':
-            id = input("Ingresa el nombre de la disciplina a eliminar: ")
-            disciplina.eliminar_datos(id)
+            nombre = input("Ingresa el nombre de la disciplina a eliminar: ")
+            categoria = input("Ingresa la categoria de la disciplina a eliminar: ")
+            disciplina.eliminar_datos(nombre, categoria)
         elif opcion == '5':
             print("Saliendo del programa.")
             break

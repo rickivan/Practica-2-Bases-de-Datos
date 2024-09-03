@@ -1,7 +1,7 @@
 # Importar los menús específicos
 from MenuDeEntrenador import main as menu_entrenador
 from MenuDeAtleta import main as menu_atleta
-from MenuDeDisciplina import main as menu_disciplina
+from MenuDeDisciplina import main as menu_disciplina    
 
 def mostrar_menu_principal():
     """Muestra el menú principal para seleccionar la entidad a gestionar."""

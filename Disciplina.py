@@ -30,23 +30,23 @@ class Disciplina(Entidad):
             writer = csv.writer(file)
             writer.writerow(['Nombre', 'Categoria', 'Participantes', 'Patrocinadores'])
     
-    def __exist(self, id):
+    def __exist(self, nombre, categoria):
         """Verifica si una disciplina con un nombre específico existe en el archivo.
 
         Args:
-            id (String): Nombre de la disciplina a verificar.
-            categoria (String): Nombre de la categoria a verificar.
+            nombre (String): Nombre de la disciplina a verificar.
+            categoria (String): Categoria de la disciplina a verificar
 
-        Returns:
+        Returns: 
             bool: True si la disciplina existe, False en caso contrario.
         """
         try:
             with open(self.archivo, mode='r') as file:
                 reader = csv.DictReader(file)
                 for row in reader: 
-                    if row['Nombre']+' '+row['Categoria'] == str(id):
+                    if (row['Nombre'].lower() == nombre.lower()) and (row['Categoria'].lower() == categoria.lower()) :
                         return True
-                    return False
+                return False
         except Exception as e:
             print(f"Ha ocurrido algun error: {e}")
     
@@ -60,9 +60,10 @@ class Disciplina(Entidad):
             ['Nombre', 'Categoria', 'Participantes', 'Patrocinadores].
         """
         try: 
-            id = datos[0]
-            if self.__exist(id): 
-                print(f"Ya se ha registrado la disciplina con ID {id}")
+            nombre = datos[0]
+            categoria = datos[1]
+            if self.__exist(nombre, categoria): 
+                print(f"Ya se ha registrado la disciplina con nombre {nombre}")
                 return 
         except Exception as e:
             print(f"Error al procesar los datos: {e}")
@@ -77,11 +78,12 @@ class Disciplina(Entidad):
             print(f"Error al registrar la disciplina: {e}"
 )
             
-    def consultar_datos(self, id):
+    def consultar_datos(self, nombre, categoria):
         """Consulta la información de una disciplina por nombre
 
         Args:
-            id (String): Nombre de la disciplina a consultar.
+            nombre (String): Nombre de la disciplina a consultar.
+            categoria (String): Categoria de la disciplina a consultar
 
         Raises:
             Exception: Si ocurre un error al leer el archivo.
@@ -90,29 +92,30 @@ class Disciplina(Entidad):
             with open(self.archivo, mode='r') as file:
                 reader = csv.DictReader(file)
                 for row in reader: 
-                    if row['Nombre'].lower() == id.lower():
+                    if (row['Nombre'].lower() == nombre.lower()) and (row['Categoria'].lower() == categoria.lower()) :
                         print(row)
                         return
                 print(f"No existe una disciplina con ese nombre")
         except Exception as e:
             print(f"Error al consultar la disciplina : {e}")
 
-    def editar_datos(self, id, campo, valor):
+    def editar_datos(self, nombre, categoria, campo, valor):
         """Edita la información de una disciplina en el archivo CSV.
 
         Args:
-            id (String): Nombre de la disciplina a editar.
+            nombre (String): Nombre de la disciplina a editar.
+            categoria (String): Categoria de la disciplina a editar.
             campo (String): Campo que se desea editar.
             valor (String): Nuevo valor para el campo.
 
         Raises:
             Exception: Si ocurre un error al leer o escribir en el archivo.
         """
-        if not self.__exist(id):
-            print(f"No se encontro la disciplina con nombre: {id}")
+        if not self.__exist(nombre, categoria):
+            print(f"No se encontro la disciplina con nombre: {nombre}")
             return
-        if campo == 'Nombre':
-            print(f"No es posible modificar el nombre de la disciplina")
+        if campo == 'Nombre' or campo == 'Categoria':
+            print(f"No es posible modificar el nombre o categoria de la disciplina")
             return
         
         temp_archivo = 'archivos/temp.csv'
@@ -124,7 +127,7 @@ class Disciplina(Entidad):
                 writer = csv.DictWriter(temp_file, fieldnames)
                 writer.writeheader()
                 for row in reader: 
-                    if row['Nombre']+' '+row['Categoria'] == id:
+                    if (row['Nombre'].lower() == nombre.lower()) and (row['Categoria'].lower() == categoria.lower()) :
                         row[campo] = valor
                     writer.writerow(row)
             os.remove(self.archivo)
@@ -136,17 +139,18 @@ class Disciplina(Entidad):
             if os.path.exists(temp_archivo):
                     os.remove(temp_archivo)
 
-    def eliminar_datos(self, id):
+    def eliminar_datos(self, nombre, categoria):
         """Elimina una disciplina del archivo CSV por su nombre.
 
         Args:
-            id (String): Nombre de la disciplina a eliminar.
+            Nombre (String): Nombre de la disciplina a eliminar.
+            Categoria (String): Categoria de la disciplina a eliminar
 
         Raises:
             Exception: Si ocurre un error al leer o escribir en el archivo.
         """
-        if not self.__exist(id):
-            print(f"No se encontro la disciplina con nombre {id}")
+        if not self.__exist(nombre, categoria):
+            print(f"No se encontro la disciplina con nombre {nombre}")
             return 
         
         temp_archivo = 'archivos/temp.csv'
@@ -159,7 +163,7 @@ class Disciplina(Entidad):
                 writer.writeheader()
 
                 for row in reader: 
-                    if row['Nombre']+' '+row['Categoria'] != id:
+                    if (row['Nombre'].lower() != nombre.lower()) or (row['Categoria'].lower() != categoria.lower()) :
                         writer.writerow(row)
             
             os.remove(self.archivo)
