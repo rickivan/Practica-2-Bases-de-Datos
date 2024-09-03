@@ -1,6 +1,6 @@
 from Disciplina import Disciplina
 
-def mostrar_menu():
+def mostrar_menu_disciplina():
     """Muestra el menú de opciones para la gestión de las Disciplinas."""
     print("\n--- Menú de Disciplinas ---")
     print("1. Agregar Disciplina")
@@ -8,8 +8,8 @@ def mostrar_menu():
     print("3. Editar Disciplina")
     print("4. Eliminar Disciplina")
     print("5. Salir")
-
-def solicitar_datos_entrenador():
+    
+def solicitar_datos_disciplina():
     """Solicita al usuario los datos de una Disciplina.
 
     Returns:
@@ -32,7 +32,7 @@ def main():
     disciplina = Disciplina()
 
     while True:
-        mostrar_menu()
+        mostrar_menu_disciplina()
         opcion = input("Selecciona una opción: ")
 
         if opcion == '1':
