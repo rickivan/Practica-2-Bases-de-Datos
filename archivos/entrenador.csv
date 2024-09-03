@@ -1,8 +1,2 @@
-ID,Nombre,Apellido Paterno,Apellido Materno,Nacionalidad,Fecha de nacimiento,Atleta,Disciplina,Teléfono,Correo
-123,Gael,Ortiz,Menez,Mexico,2004-04-02,Osdan,Basquetbol,5560289086,equipomene@outlook.com
-<<<<<<< HEAD
-2,Carlos,Flores,Mene,M�xicana,1992-02-31,Manolito,Sexo,2,manolito@yahoo.com
-4,Felipe,Flemin,Florencio,Finlandia,2004-02-02,Ferdinando,Fronton,5555555555,FelipeFeli@f.com
-=======
-13,afesf,fqefwrg,efwef,fqef,2021-12-12,fwe,dw,1324,fwef
->>>>>>> 91f3eb7 (Métodos de validación, cambion en MenuDeEntrenador y MenuDeAtleta, clase Atleta)
+ID,Nombre,Apellido Paterno,Apellido Materno,Nacionalidad,Fecha de nacimiento,Atleta,Disciplina,Telefono,Correo
+1,,Menez,,Mexico,,Carlos,Futbol,5678901234,axample@outlook.com
