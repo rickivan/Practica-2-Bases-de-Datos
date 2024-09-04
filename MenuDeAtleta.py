@@ -26,7 +26,7 @@ def solicitar_datos_atleta():
     disciplina = input("Disciplina: ")
     genero = input("Genero: ")
     telefono = input("Teléfono: ")
-    correo = input("Correo: ")
+    correo = input("Correo (example@dominio.domsup):")
     return [id, nombre, apellido_paterno, apellido_materno, nacionalidad, fecha_nacimiento, disciplina, genero, telefono, correo]
 
 def main():
@@ -45,7 +45,6 @@ def main():
         if opcion == '1':
             datos = solicitar_datos_atleta()
             try:
-                atleta.validar_entrada(datos) 
                 atleta.agregar_datos(datos)
             except ValueError as e:
                 print(f"Error en los datos ingresados: {e}")
